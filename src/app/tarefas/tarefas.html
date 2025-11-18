@@ -1,0 +1,32 @@
+<div class="container">
+    <header>
+        <h1>Minha Lista de Tarefas (Angular + Java)</h1>
+    </header>
+
+    <main>
+        <div class="input-section">
+
+            <input type="text"
+                   placeholder="O que precisa ser feito?"
+                   [(ngModel)]="novaTarefaDescricao">
+
+            <button (click)="adicionarTarefa()">Adicionar</button>
+        </div>
+
+        <div class="lista-section">
+            <ul id="lista-tarefas">
+
+                <li *ngFor="let tarefa of tarefas"
+                    class="tarefa-item"
+                    [class.concluida]="tarefa.concluida">
+                    <span (click)="toggleConcluida(tarefa)">
+                        {{ tarefa.descricao }} </span>
+
+                    <button class="btn-deletar" (click)="deletarTarefa(tarefa.id)">
+                        Deletar
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </main>
+</div>

@@ -1,0 +1,91 @@
+/* :host é um seletor especial do Angular.
+  Ele garante que estes estilos SÓ se apliquem a este componente (tarefas)
+  e não afetem o resto do seu site.
+*/
+:host {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 500px;
+    margin: 40px auto; /* Centraliza o container na página */
+}
+
+header h1 {
+    text-align: center;
+    color: #333;
+}
+
+.input-section {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+/* Usamos :host ::ng-deep para garantir que o estilo
+  seja aplicado ao input, mesmo ele sendo um elemento nativo.
+*/
+:host ::ng-deep input[type="text"] {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px; /* Aumenta um pouco a fonte */
+}
+
+:host ::ng-deep button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+:host ::ng-deep button:hover {
+    background-color: #0056b3;
+}
+
+#lista-tarefas {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.tarefa-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 10px;
+    border-bottom: 1px solid #eee;
+    font-size: 18px;
+}
+
+.tarefa-item span {
+    cursor: pointer;
+    flex-grow: 1; /* Faz o texto ocupar o espaço disponível */
+    padding-right: 15px;
+}
+
+/* Este estilo é aplicado quando o [class.concluida] for 'true' */
+.tarefa-item.concluida span {
+    text-decoration: line-through;
+    color: #888;
+}
+
+.btn-deletar {
+    background-color: #dc3545 !important; /* !important força o estilo */
+    color: white !important;
+    font-size: 12px !important; /* Botão menor */
+    padding: 5px 10px !important;
+    margin-left: 0 !important; /* Remove a margem da regra geral */
+}
+
+.btn-deletar:hover {
+    background-color: #c82333 !important;
+}

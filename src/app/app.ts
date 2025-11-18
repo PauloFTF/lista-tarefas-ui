@@ -1,12 +1,21 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
+
+// 1. Importe seu componente de tarefas (que agora funciona!)
+import { TarefasComponent } from './tarefas/tarefas';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    TarefasComponent // 2. Adicione-o aqui
+  ],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrls: ['./app.css']
 })
-export class App {
-  protected readonly title = signal('lista-tarefas-ui');
+export class AppComponent {
+  title = 'lista-tarefas-ui';
 }
