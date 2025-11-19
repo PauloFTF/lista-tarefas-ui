@@ -6,26 +6,32 @@
 
     <main>
         <div class="input-section">
-
             <input type="text"
                    placeholder="O que precisa ser feito?"
-                   [(ngModel)]="novaTarefaDescricao">
+                   [(ngModel)]="novaTarefaDescricao"
+                   (keyup.enter)="tarefaEmEdicao ? atualizarTarefaEditada() : adicionarTarefa()">
 
-            <button (click)="adicionarTarefa()">Adicionar</button>
+            <button *ngIf="!tarefaEmEdicao" (click)="adicionarTarefa()">Adicionar</button>
+
+            <button *ngIf="tarefaEmEdicao" class="btn-salvar" (click)="atualizarTarefaEditada()">Salvar</button>
+            <button *ngIf="tarefaEmEdicao" class="btn-cancelar" (click)="cancelarEdicao()">Cancelar</button>
         </div>
 
         <div class="lista-section">
             <ul id="lista-tarefas">
-
                 <li *ngFor="let tarefa of tarefas"
                     class="tarefa-item"
                     [class.concluida]="tarefa.concluida">
-                    <span (click)="toggleConcluida(tarefa)">
-                        {{ tarefa.descricao }} </span>
 
-                    <button class="btn-deletar" (click)="deletarTarefa(tarefa.id)">
-                        Deletar
-                    </button>
+                    <span (click)="toggleConcluida(tarefa)">
+                        {{ tarefa.descricao }}
+                    </span>
+
+                    <div class="acoes">
+                        <button class="btn-editar" (click)="prepararEdicao(tarefa)">✏️</button>
+
+                        <button class="btn-deletar" (click)="deletarTarefa(tarefa.id)">🗑️</button>
+                    </div>
                 </li>
             </ul>
         </div>
