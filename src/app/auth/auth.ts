@@ -8,7 +8,7 @@ import { Router } from '@angular/router'; // 1. Importe o Router
 })
 export class AuthService {
 
-  private readonly API_URL = 'http://localhost:8080/auth';
+  private readonly API_URL = 'https://lista-tarefas-api.onrender.com/auth';
 
   // 2. Injete o Router no construtor
   constructor(private http: HttpClient, private router: Router) { }

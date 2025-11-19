@@ -15,7 +15,7 @@ export interface Tarefa {
 // 2. EXPORTANDO A CLASSE 'TarefaService' (o "serviço")
 export class TarefaService {
 
-  private readonly API_URL = 'http://localhost:8080/api/tarefas';
+  private readonly API_URL = 'https://lista-tarefas-api.onrender.com/api/tarefas';
 
   constructor(private http: HttpClient) { }
 
