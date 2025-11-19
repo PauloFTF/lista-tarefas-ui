@@ -38,12 +38,17 @@ export class TarefasComponent implements OnInit {
   novaTarefaDescricao: string = "";
   tarefaEmEdicao: Tarefa | null = null;
 
+  // NOVO: Variável para guardar o nome
+  nomeUsuario: string = "";
+
   constructor(
     private tarefaService: TarefaService,
     private authService: AuthService
   ) {}
 
   ngOnInit(): void {
+    // NOVO: Busca o nome assim que a tela carrega
+    this.nomeUsuario = this.authService.getUsuarioNome();
     this.carregarTarefas();
   }
 

@@ -18,6 +18,8 @@ export class AuthService {
       tap(resposta => {
         if (resposta.token) {
           localStorage.setItem('meu-token', resposta.token);
+          // NOVO: Salva o nome do usuário também!
+          localStorage.setItem('user-name', resposta.nome);
         }
       })
     );
@@ -31,10 +33,16 @@ export class AuthService {
     return localStorage.getItem('meu-token');
   }
 
-  // 3. Atualize o método logout
+  // NOVO: Método para recuperar o nome salvo
+  getUsuarioNome(): string {
+    return localStorage.getItem('user-name') || 'Visitante';
+  }
+
   logout(): void {
-    localStorage.removeItem('meu-token'); // Apaga o crachá
-    this.router.navigate(['/login']);     // Manda o usuário para a porta de entrada
+    localStorage.removeItem('meu-token');
+    // NOVO: Limpa o nome também ao sair
+    localStorage.removeItem('user-name');
+    this.router.navigate(['/login']);
   }
 
   isLoggedIn(): boolean {

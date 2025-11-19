@@ -4,9 +4,10 @@
 
         <div class="card-header-banner">
             <div class="header-content">
-                <h1>Minhas Tarefas</h1>
-                <p>Organize o seu dia com eficiência</p>
+                <h1>Olá, {{ nomeUsuario }}! 👋</h1>
+                <p>Aqui estão as suas tarefas de hoje.</p>
             </div>
+
             <button mat-icon-button class="btn-logout-white" (click)="sair()" matTooltip="Sair do Sistema">
                 <mat-icon>logout</mat-icon>
             </button>
