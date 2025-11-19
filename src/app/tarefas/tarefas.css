@@ -15,9 +15,19 @@
     margin: 40px auto; /* Centraliza o container na página */
 }
 
+header {
+    display: flex;
+    justify-content: space-between; /* Título na esquerda, botão na direita */
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
 header h1 {
-    text-align: center;
+    margin: 0;
     color: #333;
+    font-size: 24px;
 }
 
 .input-section {
@@ -88,4 +98,19 @@ header h1 {
 
 .btn-deletar:hover {
     background-color: #c82333 !important;
+}
+
+/* Estilo do botão Sair */
+.btn-logout {
+    background-color: #6c757d; /* Cinza escuro (discreto) */
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-logout:hover {
+    background-color: #5a6268;
 }
