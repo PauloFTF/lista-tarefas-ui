@@ -1,32 +1,44 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // Para o formulário funcionar
-import { Router } from '@angular/router'; // Para mudar de página
-import { AuthService } from '../auth'; // Importando do seu arquivo auth.ts
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../auth';
+
+// --- IMPORTAÇÕES DO ANGULAR MATERIAL ---
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
-  // Ajustado para os nomes da sua imagem:
+  imports: [
+    CommonModule,
+    FormsModule,
+    // Adicionando os módulos visuais
+    MatCardModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule
+  ],
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
 export class LoginComponent {
 
-  // Dados do formulário
-  loginData = {
-    usuario: '',
-    senha: ''
-  };
+  loginData = { usuario: '', senha: '' };
+
+  // Variável para controlar se a senha está visível ou oculta
+  hidePassword = true;
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  // Ação de Login
   fazerLogin() {
     this.authService.login(this.loginData.usuario, this.loginData.senha).subscribe({
       next: () => {
-        // Se der certo, vai para as tarefas
         this.router.navigate(['/tarefas']);
       },
       error: (err) => {
@@ -36,7 +48,6 @@ export class LoginComponent {
     });
   }
 
-  // Ação de Cadastro
   fazerCadastro() {
     this.authService.register(this.loginData.usuario, this.loginData.senha).subscribe({
       next: () => {

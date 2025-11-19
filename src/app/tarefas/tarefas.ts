@@ -4,19 +4,38 @@ import { FormsModule } from '@angular/forms';
 import { Tarefa, TarefaService } from '../tarefa';
 import { AuthService } from '../auth/auth';
 
+// --- IMPORTAÇÕES ---
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTooltipModule } from '@angular/material/tooltip'; // <--- NOVO
+
 @Component({
   selector: 'app-tarefas',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatButtonModule,
+    MatCardModule,
+    MatInputModule,
+    MatIconModule,
+    MatListModule,
+    MatFormFieldModule,
+    MatTooltipModule // <--- ADICIONE AQUI TAMBÉM
+  ],
   templateUrl: './tarefas.html',
   styleUrls: ['./tarefas.css']
 })
 export class TarefasComponent implements OnInit {
+  // ... O resto da lógica continua EXATAMENTE igual ...
+  // (Não precisa mudar nada no código abaixo do export class)
 
   tarefas: Tarefa[] = [];
   novaTarefaDescricao: string = "";
-
-  // NOVO: Variável para guardar a tarefa que está a ser editada
   tarefaEmEdicao: Tarefa | null = null;
 
   constructor(
@@ -46,28 +65,22 @@ export class TarefasComponent implements OnInit {
     });
   }
 
-  // NOVO: Prepara o formulário para edição
   prepararEdicao(tarefa: Tarefa): void {
-    this.tarefaEmEdicao = tarefa; // Guarda a tarefa atual
-    this.novaTarefaDescricao = tarefa.descricao; // Sobe o texto para o input
+    this.tarefaEmEdicao = tarefa;
+    this.novaTarefaDescricao = tarefa.descricao;
   }
 
-  // NOVO: Cancela a edição e limpa o input
   cancelarEdicao(): void {
     this.tarefaEmEdicao = null;
     this.novaTarefaDescricao = "";
   }
 
-  // NOVO: Envia a atualização para o Java
   atualizarTarefaEditada(): void {
     if (this.tarefaEmEdicao && this.novaTarefaDescricao.trim() !== '') {
-      // Atualiza a descrição da tarefa em memória
       this.tarefaEmEdicao.descricao = this.novaTarefaDescricao;
-
-      // Chama o serviço
       this.tarefaService.updateTarefa(this.tarefaEmEdicao).subscribe(() => {
-        this.carregarTarefas(); // Recarrega a lista
-        this.cancelarEdicao();  // Volta ao estado normal
+        this.carregarTarefas();
+        this.cancelarEdicao();
       });
     }
   }

@@ -1,39 +1,77 @@
-<div class="container">
-    <header>
-        <h1>Minha Lista de Tarefas</h1>
-        <button class="btn-logout" (click)="sair()">Sair</button>
-    </header>
+<div class="main-background">
 
-    <main>
-        <div class="input-section">
-            <input type="text"
-                   placeholder="O que precisa ser feito?"
-                   [(ngModel)]="novaTarefaDescricao"
-                   (keyup.enter)="tarefaEmEdicao ? atualizarTarefaEditada() : adicionarTarefa()">
+    <mat-card class="tasks-card">
 
-            <button *ngIf="!tarefaEmEdicao" (click)="adicionarTarefa()">Adicionar</button>
-
-            <button *ngIf="tarefaEmEdicao" class="btn-salvar" (click)="atualizarTarefaEditada()">Salvar</button>
-            <button *ngIf="tarefaEmEdicao" class="btn-cancelar" (click)="cancelarEdicao()">Cancelar</button>
+        <div class="card-header-banner">
+            <div class="header-content">
+                <h1>Minhas Tarefas</h1>
+                <p>Organize o seu dia com eficiência</p>
+            </div>
+            <button mat-icon-button class="btn-logout-white" (click)="sair()" matTooltip="Sair do Sistema">
+                <mat-icon>logout</mat-icon>
+            </button>
         </div>
 
-        <div class="lista-section">
-            <ul id="lista-tarefas">
-                <li *ngFor="let tarefa of tarefas"
-                    class="tarefa-item"
-                    [class.concluida]="tarefa.concluida">
+        <mat-card-content class="card-body">
 
-                    <span (click)="toggleConcluida(tarefa)">
-                        {{ tarefa.descricao }}
-                    </span>
+            <div class="input-area" [class.editing-mode]="!!tarefaEmEdicao">
+                <mat-form-field appearance="outline" class="full-width no-bottom-padding">
+                    <mat-label>{{ tarefaEmEdicao ? 'Editando tarefa...' : 'Adicionar nova tarefa' }}</mat-label>
+                    <input matInput
+                           [(ngModel)]="novaTarefaDescricao"
+                           (keyup.enter)="tarefaEmEdicao ? atualizarTarefaEditada() : adicionarTarefa()"
+                           autocomplete="off">
 
-                    <div class="acoes">
-                        <button class="btn-editar" (click)="prepararEdicao(tarefa)">✏️</button>
+                    <button *ngIf="novaTarefaDescricao" matSuffix mat-icon-button aria-label="Limpar" (click)="novaTarefaDescricao=''">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
 
-                        <button class="btn-deletar" (click)="deletarTarefa(tarefa.id)">🗑️</button>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </main>
+                <button mat-fab
+                        [color]="tarefaEmEdicao ? 'accent' : 'primary'"
+                        (click)="tarefaEmEdicao ? atualizarTarefaEditada() : adicionarTarefa()"
+                        [matTooltip]="tarefaEmEdicao ? 'Salvar Alterações' : 'Adicionar'">
+                    <mat-icon>{{ tarefaEmEdicao ? 'save' : 'add' }}</mat-icon>
+                </button>
+
+                <button *ngIf="tarefaEmEdicao" mat-mini-fab color="warn" (click)="cancelarEdicao()" matTooltip="Cancelar Edição" class="btn-cancel">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+
+            <div class="list-container">
+                <div *ngIf="tarefas.length === 0" class="empty-state">
+                    <mat-icon>task_alt</mat-icon>
+                    <p>Tudo feito! Você não tem tarefas pendentes.</p>
+                </div>
+
+                <mat-list>
+                    <mat-list-item *ngFor="let tarefa of tarefas" class="task-row">
+                        <button mat-icon-button (click)="toggleConcluida(tarefa)" matTooltip="Concluir/Reabrir">
+                            <mat-icon class="check-icon" *ngIf="tarefa.concluida">check_circle</mat-icon>
+                            <mat-icon class="unchecked-icon" *ngIf="!tarefa.concluida">radio_button_unchecked</mat-icon>
+                        </button>
+
+                        <span matListItemTitle
+                              [class.completed-text]="tarefa.concluida"
+                              (click)="toggleConcluida(tarefa)"
+                              class="task-text">
+                            {{ tarefa.descricao }}
+                        </span>
+
+                        <span matListItemMeta class="actions-group">
+                            <button mat-icon-button class="action-btn edit-btn" (click)="prepararEdicao(tarefa)" matTooltip="Editar">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-icon-button class="action-btn delete-btn" (click)="deletarTarefa(tarefa.id)" matTooltip="Excluir">
+                                <mat-icon>delete_outline</mat-icon>
+                            </button>
+                        </span>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                </mat-list>
+            </div>
+
+        </mat-card-content>
+    </mat-card>
 </div>
