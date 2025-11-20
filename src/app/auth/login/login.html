@@ -3,41 +3,50 @@
 
         <div class="card-header">
             <div class="icon-circle">
-                <mat-icon>lock</mat-icon>
+                <mat-icon>{{ isRegistering ? 'person_add' : 'lock' }}</mat-icon>
             </div>
-            <h2>Bem-vindo</h2>
-            <p>Faça login para gerenciar suas tarefas</p>
+
+            <h2>{{ isRegistering ? 'Crie sua Conta' : 'Bem-vindo' }}</h2>
+
+            <p>
+                {{ isRegistering
+                    ? 'Preencha os dados para se registrar'
+                    : 'Faça login para gerenciar suas tarefas'
+                }}
+            </p>
         </div>
 
         <mat-card-content>
             <mat-form-field appearance="outline" class="full-width">
                 <mat-label>Usuário</mat-label>
-                <input matInput [(ngModel)]="loginData.usuario" placeholder="Digite seu usuário">
+                <input matInput [(ngModel)]="loginData.usuario" placeholder="Digite seu usuário" autocomplete="off">
                 <mat-icon matSuffix>person</mat-icon>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="full-width">
                 <mat-label>Senha</mat-label>
                 <input matInput [type]="hidePassword ? 'password' : 'text'" [(ngModel)]="loginData.senha">
-
-                <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Ocultar senha'">
+                <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
                     <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
             </mat-form-field>
         </mat-card-content>
 
         <mat-card-actions class="actions-column">
-            <button mat-raised-button color="primary" class="btn-large" (click)="fazerLogin()">
+
+            <button *ngIf="!isRegistering" mat-raised-button color="primary" class="btn-large" (click)="fazerLogin()">
                 ENTRAR
             </button>
 
-            <div class="divider">
-                <span>ou</span>
+            <button *ngIf="isRegistering" mat-raised-button color="accent" class="btn-large" (click)="fazerCadastro()">
+                CADASTRAR USUÁRIO
+            </button>
+
+            <div class="toggle-link" (click)="toggleMode()">
+                <span *ngIf="!isRegistering">Não tem conta? <strong>Cadastre-se</strong></span>
+                <span *ngIf="isRegistering">Já tem conta? <strong>Faça Login</strong></span>
             </div>
 
-            <button mat-stroked-button color="primary" class="btn-large" (click)="fazerCadastro()">
-                CRIAR CONTA
-            </button>
         </mat-card-actions>
 
     </mat-card>
